@@ -58,6 +58,7 @@
 #include "krnllib.h"
 
 size_t str_len(const char* str);
+int str_cmp(const char* str1, const char* str2);
 char*  str_read(const char* data, int offset);
 
 #endif /* STRLIB_H_ */
