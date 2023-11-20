@@ -10,4 +10,8 @@ LDFLAGS   = -util
 # Dynamic dependencies:
 
 o.main:	c.main
+o.main:	LibDTB:h.krnllib
+o.main:	LibDTB:h.strlib
+o.main:	LibDTB:h.krnllib
 o.main:	LibDTB:h.dtblib
+o.main:	h.main

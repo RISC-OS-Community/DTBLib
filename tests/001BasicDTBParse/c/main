@@ -3,19 +3,29 @@
 
 #include <assert.h>
 
+#include "LibDTB:krnllib.h"
+#include "LibDTB:strlib.h"
 #include "LibDTB:dtblib.h"
+#include "main.h"
 
-void test_simple_dtb() {
+const char* load_dtb(const char* filename) {
+    // Function to load a DTB file
+    (void)filename;
+    return NULL;
+}
+
+void test_simple_dtb(void) {
     const char* simple_dtb = load_dtb("simple.dtb"); // Function to load a DTB file
-    struct dt_node* root = parse_dtb(simple_dtb);
+    char *string_block = (char *)krnl_malloc(1024);
+    struct dt_node* root = parse_dtb(simple_dtb, string_block, 0);
 
     assert(root != NULL); // Replace with your own assert function
-    assert(strcmp(root->name, "root_node_name") == 0);
+    assert(str_cmp(root->name, "root_node_name") == 0);
 
     // Further checks for children, properties, etc.
 
-    free_tree(root); // Clean up
-    free_dtb(simple_dtb); // Function to free DTB data
+    krnl_free((void *)root); // Clean up
+    krnl_free((void *)simple_dtb); // Function to free DTB data
 }
 
 int main() {
