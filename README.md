@@ -1,5 +1,7 @@
 # DTBLib: Device Tree Blob Parsing Library
 
+Please note: This library is still under development. It is not yet ready for use.
+
 **Overview:**
 
 DTBLib is a specialized library designed for reading and parsing Device Tree Blob (DTB) files. Developed in strict adherence to ANSI C standards, this library is distinct for its lack of dependencies on the Standard C Library (SCL). This unique attribute makes DTBLib particularly suited for use in environments where standard library support is unavailable or undesirable.
@@ -10,7 +12,9 @@ The genesis of DTBLib was born out of a necessity encountered during a personal 
 
 **Primary Use Case:**
 
-While the initial intention behind DTBLib was to serve as a component in the RISC OS Kernel — specifically within its Hardware Abstraction Layer (HAL) — the library's design is not exclusive to this use. Its creation was driven by an experimental endeavor to integrate DeviceTree support into RISC OS. Nevertheless, DTBLib's versatile and adaptable nature makes it a suitable choice for a wide range of projects that require DTB parsing capabilities under similar constraints.
+While the initial intention behind DTBLib was to serve as a component in the RISC OS Kernel — specifically within its Hardware Abstraction Layer (HAL) — the library's design is not exclusive to this use. Its creation was driven by an experimental endeavor to integrate DeviceTree support into RISC OS. Nevertheless, DTBLib's versatile and adaptable nature makes it a suitable choice for a wide range of platforms, however this repository is dedicated solely to the RISC OS focused developments, if you are interested in DTBLib for multiple platforms please check the original repository here:
+
+https://github.com/pzaino/DTBLib
 
 **Considerations for Usage:**
 
