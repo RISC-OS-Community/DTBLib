@@ -3,8 +3,10 @@
 COMPONENT = BasicDTBParse
 OBJS      = main
 
+#include HAL
+#LIBS = LibDTB:o.dtblibzm C:ModMalloc.o.ModMalloczm
 include CUtil
-UTIL_LIBS = LibDTB:o.dtblib
+UTIL_LIBS = LibDTB:o.dtblibzm C:ModMalloc.o.ModMalloczm
 LDFLAGS   = -util
 
 # Dynamic dependencies:
