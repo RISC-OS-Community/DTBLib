@@ -100,6 +100,16 @@ uint64_t krnl_bswap64(uint64_t val);
 uint32_t read_uint32(const char* data, int offset);
 uint64_t read_uint64(const char* data, int offset);
 
+// Define assert function
+void krnl_int_to_str(int num, char* str);
+void krnl_debug_print(const char* message);
+void krnl_assert_failed(const char* expression, const char* file, unsigned int line);
+#ifdef NDEBUG
+#define krnl_assert(expression) ((void)0)
+#else
+#define krnl_assert(expression) ((expression) ? (void)0 : krnl_assert_failed(#expression, __FILE__, __LINE__))
+#endif
+
 // Memory allocation functions
 
 void* krnl_malloc(size_t size);

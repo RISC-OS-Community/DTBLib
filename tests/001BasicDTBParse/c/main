@@ -19,8 +19,8 @@ void test_simple_dtb(void) {
     char *string_block = (char *)krnl_malloc(1024);
     struct dt_node* root = parse_dtb(simple_dtb, string_block, 0);
 
-    assert(root != NULL); // Replace with your own assert function
-    assert(str_cmp(root->name, "root_node_name") == 0);
+    krnl_assert(root != NULL); // Replace with your own assert function
+    krnl_assert(str_cmp(root->name, "root_node_name") == 0);
 
     // Further checks for children, properties, etc.
 
@@ -28,7 +28,7 @@ void test_simple_dtb(void) {
     krnl_free((void *)simple_dtb); // Function to free DTB data
 }
 
-int main() {
+int main(void) {
     test_simple_dtb();
     return 0;
 }

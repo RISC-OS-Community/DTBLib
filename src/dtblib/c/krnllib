@@ -72,6 +72,45 @@ uint64_t krnl_bswap64(uint64_t val) {
            ((val & 0xFF00000000000000ULL) >> 56);
 }
 
+void krnl_int_to_str(int num, char* str) {
+    if (str == NULL) {
+        return;
+    }
+
+    // Handle negative numbers
+    int is_negative = 0;
+    if (num < 0) {
+        is_negative = 1;
+        num = -num;
+    }
+
+    // Start converting from the end
+    int i = 0;
+    do {
+        str[i++] = (num % 10) + '0';
+        num /= 10;
+    } while (num != 0);
+
+    // Add negative sign if needed
+    if (is_negative) {
+        str[i++] = '-';
+    }
+
+    str[i] = '\0'; // Null-terminate the string
+
+    // Reverse the string
+    int start = 0;
+    int end = i - 1;
+    char temp;
+    while (start < end) {
+        temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+        start++;
+        end--;
+    }
+}
+
 uint32_t read_uint32(const char* data, int offset) {
     uint32_t val;
     krnl_memcpy(&val, data + offset, sizeof(uint32_t));
@@ -82,6 +121,55 @@ uint64_t read_uint64(const char* data, int offset) {
     uint64_t val;
     krnl_memcpy(&val, data + offset, sizeof(uint64_t));
     return krnl_bswap64(val);
+}
+
+// text output
+void krnl_debug_print(const char* message) {
+    // Write a zero terminated string to the debug console
+    // using XOS_Write in inline assembly
+#if defined(__GNUC__) && defined(__arm__)
+    __asm__ __volatile__ (
+        "mov r0, %[message]\n"
+        "swi #0x20002\n"
+        :
+        : [message] "r" (message)
+        : "r0"
+    );
+#elif defined(__GNUC__) && defined(__aarch64__)
+    __asm__ __volatile__ (
+        "mov x0, %[message]\n"
+        "mov x8, #0x2000004\n"
+        "svc #0x0\n" // There is no RISC OS 64bit yet, so this is a TBD
+        :
+        : [message] "r" (message)
+        : "x0", "x8"
+    );
+#elif defined(__NORCROFTC) && defined(__arm__)
+    __asm {
+        MOV a1, message
+        SWI 0x20002, {a1}, {}, {PSR}
+    };
+#elif defined(__NORCROFTC) && defined(__aarch64__)
+    __asm {
+        MOV x0, message
+        SVC #0x0 ; There is no RISC OS 64bit yet, so this is a TBD
+    };
+#else
+    // Add your custom implementation here
+    (void)message;
+#endif
+}
+
+void krnl_assert_failed(const char* expression, const char* file, unsigned int line) {
+    krnl_debug_print("Assertion failed: ");
+    krnl_debug_print(expression);
+    krnl_debug_print(", file ");
+    krnl_debug_print(file);
+    krnl_debug_print(", line ");
+    char line_str[12];
+    krnl_int_to_str(line, line_str);
+    krnl_debug_print(line_str);
+    krnl_debug_print("\n");
 }
 
 // Memory allocation functions

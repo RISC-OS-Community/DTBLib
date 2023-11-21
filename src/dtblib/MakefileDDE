@@ -4,24 +4,12 @@ COMPONENT = dtblib
 OBJS      = krnllib strlib dtb
 
 include CLibrary
+INCLUDED_CLIBRARY = NO
 LIBS    =
 #LDFLAGS = -bin
 
 # Dynamic dependencies:
 
-oz.krnllib:	c.krnllib
-oz.krnllib:	h.krnllib
-o.krnllib:	c.krnllib
-o.krnllib:	h.krnllib
-oz.strlib:	c.strlib
-oz.strlib:	h.krnllib
-oz.strlib:	h.strlib
-oz.strlib:	h.krnllib
-oz.dtb:	c.dtb
-oz.dtb:	h.krnllib
-oz.dtb:	h.strlib
-oz.dtb:	h.krnllib
-oz.dtb:	h.dtb
 o.strlib:	c.strlib
 o.strlib:	h.krnllib
 o.strlib:	h.strlib
@@ -31,3 +19,7 @@ o.dtb:	h.krnllib
 o.dtb:	h.strlib
 o.dtb:	h.krnllib
 o.dtb:	h.dtb
+oz.krnllib:	c.krnllib
+oz.krnllib:	h.krnllib
+o.krnllib:	c.krnllib
+o.krnllib:	h.krnllib
